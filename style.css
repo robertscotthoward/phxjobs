@@ -44,6 +44,55 @@ h1::after {
     border-radius: 2px;
 }
 
+/* Accordion Styles */
+.accordion {
+    margin-bottom: 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.accordion-header {
+    padding: 1rem 1.5rem;
+    background: #f8fafc;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.accordion-header:hover {
+    background: #edf2f7;
+}
+
+.accordion-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0;
+}
+
+.accordion-icon {
+    font-size: 1.5rem;
+    color: #4a5568;
+    font-weight: 300;
+    transition: transform 0.2s ease;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.accordion-content.open {
+    max-height: 2000px; /* Adjust based on your content */
+    transition: max-height 0.5s ease-in;
+}
+
 /* Loading State */
 .loading {
     text-align: center;
@@ -67,11 +116,8 @@ table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    margin: 2rem 0;
+    margin: 0;
     background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 th, td {
@@ -134,6 +180,14 @@ td:nth-child(3) { /* Description column */
 
     h1 {
         font-size: 2rem;
+    }
+
+    .accordion-header {
+        padding: 0.75rem 1rem;
+    }
+
+    .accordion-header h2 {
+        font-size: 1.1rem;
     }
 }
 

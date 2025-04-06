@@ -3,11 +3,16 @@ const { createApp } = Vue;
 createApp({
     data() {
         return {
-            title: 'Data from Google Sheet',
+            title: 'Phoenix Staffing',
             loading: false,
             error: null,
             data: [],
-            headers: []
+            headers: [],
+            sections: {
+                employers: false,
+                employees: false,
+                consultants: false
+            }
         };
     },
     computed: {
@@ -21,6 +26,26 @@ createApp({
         this.fetchData();
     },
     methods: {
+        toggleSection(section) {
+            this.sections[section] = !this.sections[section];
+        },
+        getFilteredData(type) {
+            if (type === 'employer') {
+                return this.data.filter(row => row.Type === 'Employer');
+            } else if (type === 'consultant') {
+                return this.data.filter(row =>
+                    row.Type === 'Worker' &&
+                    row.Tags &&
+                    row.Tags.toLowerCase().includes('consultant')
+                );
+            } else if (type === 'employee') {
+                return this.data.filter(row =>
+                    row.Type === 'Worker' &&
+                    (!row.Tags || !row.Tags.toLowerCase().includes('consultant'))
+                );
+            }
+            return [];
+        },
         filteredRow(row) {
             const filtered = {};
             ['Type', 'Tags', 'Description'].forEach(key => {
