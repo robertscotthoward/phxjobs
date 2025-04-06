@@ -11,6 +11,14 @@
 <body>
     <div id="app">
         <h1>{{ title }}</h1>
+        <div class="search-container">
+            <input
+                type="text"
+                v-model="searchQuery"
+                placeholder="Search by type, tags, or description..."
+                class="search-input"
+            >
+        </div>
         <div v-if="loading">
             <p>Loading data...</p>
         </div>

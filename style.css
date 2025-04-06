@@ -44,6 +44,33 @@ h1::after {
     border-radius: 2px;
 }
 
+/* Search Bar Styles */
+.search-container {
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+}
+
+.search-input {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
+    color: #2d3748;
+    transition: all 0.2s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+}
+
+.search-input::placeholder {
+    color: #a0aec0;
+}
+
 /* Accordion Styles */
 .accordion {
     margin-bottom: 1rem;

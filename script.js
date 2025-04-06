@@ -8,6 +8,7 @@ createApp({
             error: null,
             data: [],
             headers: [],
+            searchQuery: '',
             sections: {
                 employers: false,
                 employees: false,
@@ -22,6 +23,16 @@ createApp({
             );
         }
     },
+    watch: {
+        searchQuery(newQuery) {
+            // Auto-expand sections that have matching results
+            if (newQuery) {
+                this.sections.employers = this.getFilteredData('employer').length > 0;
+                this.sections.employees = this.getFilteredData('employee').length > 0;
+                this.sections.consultants = this.getFilteredData('consultant').length > 0;
+            }
+        }
+    },
     mounted() {
         this.fetchData();
     },
@@ -29,22 +40,36 @@ createApp({
         toggleSection(section) {
             this.sections[section] = !this.sections[section];
         },
+        matchesSearch(row) {
+            if (!this.searchQuery) return true;
+
+            const query = this.searchQuery.toLowerCase();
+            return (
+                (row.Type && row.Type.toLowerCase().includes(query)) ||
+                (row.Tags && row.Tags.toLowerCase().includes(query)) ||
+                (row.Description && row.Description.toLowerCase().includes(query))
+            );
+        },
         getFilteredData(type) {
+            let filteredData = [];
+
             if (type === 'employer') {
-                return this.data.filter(row => row.Type === 'Employer');
+                filteredData = this.data.filter(row => row.Type === 'Employer');
             } else if (type === 'consultant') {
-                return this.data.filter(row =>
+                filteredData = this.data.filter(row =>
                     row.Type === 'Worker' &&
                     row.Tags &&
                     row.Tags.toLowerCase().includes('consultant')
                 );
             } else if (type === 'employee') {
-                return this.data.filter(row =>
+                filteredData = this.data.filter(row =>
                     row.Type === 'Worker' &&
                     (!row.Tags || !row.Tags.toLowerCase().includes('consultant'))
                 );
             }
-            return [];
+
+            // Apply search filter
+            return filteredData.filter(row => this.matchesSearch(row));
         },
         filteredRow(row) {
             const filtered = {};
