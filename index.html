@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sheet Data</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ title }}</h1>
+        <div v-if="loading">
+            <p>Loading data...</p>
+        </div>
+        <div v-else-if="error">
+            <p>Error loading data: {{ error }}</p>
+        </div>
+        <div v-else-if="data.length > 0">
+            <table>
+                <thead>
+                    <tr>
+                        <th v-for="(header, index) in filteredHeaders" :key="index">{{ header }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(row, index) in data" :key="index">
+                        <td v-for="(value, key) in filteredRow(row)" :key="key">{{ value }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div v-else>
+            <p>No data to display.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
